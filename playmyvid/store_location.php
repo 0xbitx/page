@@ -15,7 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $isp = $details->org ?? "N/A";
         $time = date("Y-m-d H:i:s");
         $locationData = "lat: $latitude, long: $longitude, ipv4: $userIP, os: $os, browser: $browserName, devicetype: $deviceType,  screenResolution: $screenResolution, country: $country, isp: $isp, time: $time";
-        file_put_contents("../data.txt", $locationData . PHP_EOL, FILE_APPEND);
+
+        $fileContent = file_get_contents("../data.txt");
+        $trimmedContent = rtrim($fileContent);
+        $trimmedContent .= PHP_EOL . $locationData;
+        file_put_contents("../data.txt", $trimmedContent, LOCK_EX);
 
         echo "Location saved: $locationData";
     } else {
